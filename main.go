@@ -21,6 +21,13 @@ type Repo struct {
 
 func main() {
 	r := gin.Default()
+
+	r.GET("/", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"status": "OK",
+		})
+	})
+
 	r.GET("/github/*language", func(c *gin.Context) {
 
 		// Set fallback values
@@ -33,6 +40,7 @@ func main() {
 
 		c.JSON(http.StatusOK, repos)
 	})
+
 	r.Run()
 }
 
