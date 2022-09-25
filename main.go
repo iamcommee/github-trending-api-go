@@ -22,9 +22,9 @@ type Repo struct {
 	Repository     string `json:"repository "`
 	Description    string `json:"description"`
 	URL            string `json:"url"`
-	Star           int    `json:"star"`
-	Fork           int    `json:"fork"`
-	TimeFrameStar  int    `json:"time_frame_star"`
+	Stars          int    `json:"stars"`
+	Forks          int    `json:"forks"`
+	TimeFrameStars int    `json:"time_frame_stars"`
 }
 
 func main() {
@@ -73,7 +73,7 @@ func getRepos(language, timeFrame string) Repos {
 
 		starHtmlAttr := fmt.Sprintf(`a[href='%s']`, "/"+repo+"/stargazers")
 		starHtmlValue := e.ChildText(starHtmlAttr)
-		star, err := strconv.Atoi(strings.Replace(starHtmlValue, ",", "", -1))
+		stars, err := strconv.Atoi(strings.Replace(starHtmlValue, ",", "", -1))
 
 		if err != nil {
 			log.Println(err)
@@ -81,7 +81,7 @@ func getRepos(language, timeFrame string) Repos {
 
 		forkHtmlAttr := fmt.Sprintf(`a[href='%s']`, "/"+repo+"/network/members"+"."+repoName)
 		forkHtmlValue := e.ChildText(forkHtmlAttr)
-		fork, err := strconv.Atoi(strings.Replace(forkHtmlValue, ",", "", -1))
+		forks, err := strconv.Atoi(strings.Replace(forkHtmlValue, ",", "", -1))
 
 		if err != nil {
 			log.Println(err)
@@ -89,7 +89,7 @@ func getRepos(language, timeFrame string) Repos {
 
 		timeFrameStarHtmlValue := e.ChildText("span[class='d-inline-block float-sm-right']")
 		timeFrameStarSplitter := strings.Split(timeFrameStarHtmlValue, " ")
-		timeFrameStar, err := strconv.Atoi(strings.Replace(timeFrameStarSplitter[0], ",", "", -1))
+		timeFrameStars, err := strconv.Atoi(strings.Replace(timeFrameStarSplitter[0], ",", "", -1))
 
 		if err != nil {
 			log.Println(err)
@@ -101,9 +101,9 @@ func getRepos(language, timeFrame string) Repos {
 			Repository:     repo,
 			Description:    description,
 			URL:            "https://github.com/" + repo,
-			Star:           star,
-			Fork:           fork,
-			TimeFrameStar:  timeFrameStar,
+			Stars:          stars,
+			Forks:          forks,
+			TimeFrameStars: timeFrameStars,
 		})
 	})
 
