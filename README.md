@@ -5,7 +5,9 @@ This repository is created by Go with [go colly](http://go-colly.org/) for scrap
 
 URL Endpoint : 
 
+```
 https://iamcommee-trending-api.herokuapp.com/github/{programing_language}?since={daily|weekly|monthly}
+```
 
 Example : 
 
