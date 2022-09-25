@@ -14,7 +14,7 @@ type Repos struct {
 }
 
 type Repo struct {
-	Title       string `json:"title"`
+	Name        string `json:"name"`
 	Description string `json:"description"`
 	URL         string `json:"url"`
 }
@@ -49,17 +49,16 @@ func getRepos(language, timeFrame string) Repos {
 
 	var Repos Repos
 	c.OnHTML(".Box-row", func(e *colly.HTMLElement) {
-		title := e.ChildAttr("a", "href")
-		title, _ = url.PathUnescape(title)
-		title = strings.Replace(title, "/login?return_to=", "", -1)
-		title = strings.Replace(title, "/", "", 1)
+		name := e.ChildAttr(".lh-condensed a", "href")
+		name, _ = url.PathUnescape(name)
+		name = strings.Replace(name, "/", "", 1)
 
 		description := e.ChildText("p")
 
 		Repos.Repos = append(Repos.Repos, Repo{
-			Title:       title,
+			Name:        name,
 			Description: description,
-			URL:         "https://github.com/" + title,
+			URL:         "https://github.com/" + name,
 		})
 	})
 
