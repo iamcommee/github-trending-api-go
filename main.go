@@ -69,12 +69,9 @@ func getRepos(language, timeFrame string) Repos {
 		owner := repoSplitter[1]
 		repoName := repoSplitter[2]
 		repo := owner + "/" + repoName
-
-		starHtmlAttr := fmt.Sprintf(`a[href='%s']`, "/"+repo+"/stargazers")
-		forkHtmlAttr := fmt.Sprintf(`a[href='%s']`, "/"+repo+"/network/members"+"."+repoName)
-
 		description := e.ChildText("p")
 
+		starHtmlAttr := fmt.Sprintf(`a[href='%s']`, "/"+repo+"/stargazers")
 		starHtmlValue := e.ChildText(starHtmlAttr)
 		star, err := strconv.Atoi(strings.Replace(starHtmlValue, ",", "", -1))
 
@@ -82,6 +79,7 @@ func getRepos(language, timeFrame string) Repos {
 			log.Println(err)
 		}
 
+		forkHtmlAttr := fmt.Sprintf(`a[href='%s']`, "/"+repo+"/network/members"+"."+repoName)
 		forkHtmlValue := e.ChildText(forkHtmlAttr)
 		fork, err := strconv.Atoi(strings.Replace(forkHtmlValue, ",", "", -1))
 
@@ -90,9 +88,7 @@ func getRepos(language, timeFrame string) Repos {
 		}
 
 		timeFrameStarHtmlValue := e.ChildText("span[class='d-inline-block float-sm-right']")
-
 		timeFrameStarSplitter := strings.Split(timeFrameStarHtmlValue, " ")
-
 		timeFrameStar, err := strconv.Atoi(strings.Replace(timeFrameStarSplitter[0], ",", "", -1))
 
 		if err != nil {
