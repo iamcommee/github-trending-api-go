@@ -17,14 +17,15 @@ type Repos struct {
 }
 
 type Repo struct {
-	Owner          string `json:"owner"`
-	RepositoryName string `json:"repository_name"`
-	Repository     string `json:"repository "`
-	Description    string `json:"description"`
-	URL            string `json:"url"`
-	Stars          int    `json:"stars"`
-	Forks          int    `json:"forks"`
-	TimeFrameStars int    `json:"time_frame_stars"`
+	Owner              string `json:"owner"`
+	RepositoryName     string `json:"repository_name"`
+	Repository         string `json:"repository "`
+	Description        string `json:"description"`
+	ProgramingLanguage string `json:"programing_language"`
+	URL                string `json:"url"`
+	Stars              int    `json:"stars"`
+	Forks              int    `json:"forks"`
+	TimeFrameStars     int    `json:"time_frame_stars"`
 }
 
 func main() {
@@ -70,6 +71,7 @@ func getRepos(language, timeFrame string) Repos {
 		repoName := repoSplitter[2]
 		repo := owner + "/" + repoName
 		description := e.ChildText("p")
+		programingLanguage := e.ChildText("span[itemprop='programmingLanguage']")
 
 		starHtmlAttr := fmt.Sprintf(`a[href='%s']`, "/"+repo+"/stargazers")
 		starHtmlValue := e.ChildText(starHtmlAttr)
@@ -87,6 +89,7 @@ func getRepos(language, timeFrame string) Repos {
 			log.Println(err)
 		}
 
+		// example : 9,999 stars today
 		timeFrameStarHtmlValue := e.ChildText("span[class='d-inline-block float-sm-right']")
 		timeFrameStarSplitter := strings.Split(timeFrameStarHtmlValue, " ")
 		timeFrameStars, err := strconv.Atoi(strings.Replace(timeFrameStarSplitter[0], ",", "", -1))
@@ -96,14 +99,15 @@ func getRepos(language, timeFrame string) Repos {
 		}
 
 		Repos.Repos = append(Repos.Repos, Repo{
-			Owner:          owner,
-			RepositoryName: repoName,
-			Repository:     repo,
-			Description:    description,
-			URL:            "https://github.com/" + repo,
-			Stars:          stars,
-			Forks:          forks,
-			TimeFrameStars: timeFrameStars,
+			Owner:              owner,
+			RepositoryName:     repoName,
+			Repository:         repo,
+			Description:        description,
+			ProgramingLanguage: programingLanguage,
+			URL:                "https://github.com/" + repo,
+			Stars:              stars,
+			Forks:              forks,
+			TimeFrameStars:     timeFrameStars,
 		})
 	})
 
