@@ -105,7 +105,6 @@ func getRepos(language, timeFrame string) Repos {
 			Fork:           fork,
 			TimeFrameStar:  timeFrameStar,
 		})
-
 	})
 
 	c.Visit("https://github.com/trending/" + language + "?since=" + timeFrame)
