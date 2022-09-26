@@ -11,7 +11,7 @@ https://iamcommee-trending-api.herokuapp.com/github/{programing_language}?since=
 
 Example : 
 
-- https://iamcommee-trending-api.herokuapp.com/github/ (If `since` param is empty, it will use daily as a default)
+- https://iamcommee-trending-api.herokuapp.com/github/ (If `since` param is empty, use daily as a default)
 - https://iamcommee-trending-api.herokuapp.com/github/?since=weekly
 - https://iamcommee-trending-api.herokuapp.com/github/go?since=monthly
 
